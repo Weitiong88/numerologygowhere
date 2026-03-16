@@ -1,3 +1,7 @@
+> **LIVE TEST STATUS** — All bugs below confirmed on live site by Perplexity AI Agent, March 16, 2026
+> Life Numbers calculator: ✅ Working | Language toggle: ✅ Working | Auth modal (via Life Numbers): ✅ Working
+> Site features tested: Our Story, Life Numbers calculator, Architects of Life, language EN/中文, Sign In button, Share My Reading
+
 # 🐛 Bugs & Fixes — numerologygowhere.com
 
 Audit Date: March 16, 2026  
@@ -183,3 +187,26 @@ TTL:   3600
 ---
 
 *Last updated: March 16, 2026 · Audit by Perplexity AI*
+
+
+---
+
+## LIVE AUDIT CONFIRMATION — March 16, 2026
+
+**Tested by:** Perplexity AI Agent (browser automation)
+**Test date:** March 16, 2026
+
+### Features Tested & Status
+| Feature | Status | Notes |
+|---|---|---|
+| Our Story page | ✅ Working | Lo Shu grid interactive, content loads |
+| Language toggle EN/中文 | ✅ Working | Most content translates correctly |
+| Life Numbers calculator | ✅ Working | Calculates correctly for DOB input |
+| Architects of Life report | ✅ Working | Full report generates |
+| Auth modal (via Life Numbers) | ✅ Working | Sign In / Register / Google OAuth present |
+| Sign In header button | ❌ BUG 4 | Shows spinner, no modal opens |
+| Share My Reading button | ❌ BUG 1 | Shows spinner briefly, then nothing |
+| Lo Shu button translation | ❌ BUG 3 | "Tap a number..." stays English in 中文 mode |
+| Referral code (English mode) | ❌ BUG 2 | Shows Chinese text in English mode |
+| Back nav on Architects page | ❌ BUG 5 | No back button, main nav hidden |
+| numerologygowhere.sg | ❌ INFRA | ERR_SSL_PROTOCOL_ERROR — DNS fix needed |
