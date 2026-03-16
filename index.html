@@ -1,19 +1,81 @@
-<!-- SOURCE CODE BACKUP — numerologygowhere.com
-     Audit Date: March 16, 2026
-     Last Audited by: Perplexity AI Agent
+<!--
+  NUMEROLOGY GOWHERE - index.html
+  Bug Patch Documentation & Fix Reference
+  Audited: March 16, 2026 by Perplexity AI Agent
 
-     STATUS: This file is a source documentation backup.
-     The actual deployed HTML is on Netlify (quiet-custard-c54ca1).
-     To get the full source: open https://numerologygowhere.com → Cmd+S → save as index.html → upload here.
+  IMPORTANT: The actual deployed HTML lives on Netlify (drag-drop deployed).
+  The owner must:
+  1. Open https://numerologygowhere.com in browser
+  2. Press Cmd+S to save as index.html
+  3. Open the saved file in a code editor
+  4. Apply the 5 patches below
+  5. Upload the patched file to Netlify Drop
 
-     CONFIRMED BUGS (all verified on live site March 16, 2026):
-     BUG 1 [HIGH]   Share My Reading button broken — spinner shows, then nothing
-     BUG 2 [MEDIUM] Referral code section shows Chinese in English mode
-     BUG 3 [LOW]    Lo Shu Tap a number button not translated in Chinese mode
-     BUG 4 [LOW]    Sign In header button shows spinner but no modal opens
-     BUG 5 [UX]     No back navigation on Architects of Life full-screen page
+  ===== ALL 5 BUG PATCHES =====
 
-     INFRASTRUCTURE ISSUES:
-     - numerologygowhere.sg: ERR_SSL_PROTOCOL_ERROR — DNS A record not set
-     - Netlify stuck deploy (Mar 10): needs to be cancelled
+  PATCH 1 - BUG 4: Sign In button (header) opens auth modal
+  Find: document.getElementById('btnSignIn').addEventListener('click', ...)
+  Replace click handler body with:
+    openAuthModal();
+
+  PATCH 2 - BUG 1: Share My Reading button
+  Find the Share button click handler (looks for 'shareBtn' or 'Share My Reading')
+  Replace with:
+    const btn = document.querySelector('[data-share], #shareBtn, button.share-btn');
+    if (btn) btn.addEventListener('click', async () => {
+      if (!currentUser) {
+        showToast('Please sign in to share your reading');
+        openAuthModal();
+        return;
+      }
+      const shareUrl = window.location.href;
+      if (navigator.share) {
+        await navigator.share({ title: 'My Numerology Reading', url: shareUrl });
+      } else {
+        await navigator.clipboard.writeText(shareUrl);
+        showToast('Link copied to clipboard!');
+      }
+    });
+
+  PATCH 3 - BUG 2: Referral code translations (English mode)
+  Find the translations/i18n object (search for 'referral' or '有推荐码')
+  Add to EN translations:
+    referralPrompt: 'Got a referral code? Enter for 10% off',
+    referralApply: 'Apply',
+    referralPlaceholder: 'NGW-XXXXXX'
+  Find the referral HTML section and add data-lang-key attributes
+
+  PATCH 4 - BUG 3: Lo Shu Tap button translation
+  Find: id="loShuTooltip" or the button showing 'Tap a number to see its energy'
+  Wrap text in span with translation key:
+    <span data-zh='点击数字查看其能量' data-en='Tap a number to see its energy'>
+      Tap a number to see its energy
+    </span>
+  Then add to the language switch function:
+    loShuTooltip.querySelector('span').textContent = lang === 'zh'
+      ? '点击数字查看其能量' : 'Tap a number to see its energy';
+
+  PATCH 5 - BUG 5: Back navigation on Architects of Life page
+  Find the Architects section show/display function
+  Add at the beginning of the section HTML:
+    <button onclick="showSection('calculator')" style="position:absolute;top:1rem;left:1rem;">
+      ← Back
+    </button>
+  Or ensure the main nav stays visible when Architects section is shown.
+
 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Numerology GoWhere — Source Reference</title>
+</head>
+<body>
+  <h1>Numerology GoWhere — Source Code</h1>
+  <p>This repository contains the source code backup and audit documentation for
+  <a href="https://numerologygowhere.com">numerologygowhere.com</a>.</p>
+  <p>See <a href="BUGS-AND-FIXES.md">BUGS-AND-FIXES.md</a> for full bug details and code fixes.</p>
+  <p><strong>To update this file:</strong> Open the live site → Cmd+S → Upload here.</p>
+</body>
+</html>
