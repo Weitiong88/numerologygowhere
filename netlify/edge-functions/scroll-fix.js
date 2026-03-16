@@ -38,34 +38,40 @@ export default async function(request, context) {
       }).observe(i, {attributes: true, childList: true});
     }
 
-    // Fix 2, 3, 4: Footer links - match by text content since hrefs are "#"
+    // Fix 2, 3, 4: Footer links by text content
     document.querySelectorAll('a').forEach(function(el) {
       var txt = el.textContent.trim().toLowerCase();
 
-      // Fix 2: Pricing -> find and click the existing Upgrade to Pro button
+      // Fix 2: Pricing -> find any button that triggers pricing modal and click it
       if (txt === 'pricing') {
         el.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
-          // Navigate to Life Numbers tab first, then trigger pricing
-          var lifeTab = document.querySelector('[data-section="life"], a[href*="life"]');
-          // Try clicking an existing upgrade/pricing trigger button
-          var upgBtn = document.querySelector('button[onclick*="pricing"], button[onclick*="modal"], [data-action="upgrade"]');
+          // Find any visible "Upgrade" or "Buy" button and click it to open pricing modal via SPA
+          var btns = Array.from(document.querySelectorAll('button'));
+          var upgBtn = btns.find(function(b) {
+            return b.textContent && (b.textContent.indexOf('Upgrade') !== -1 || b.textContent.indexOf('Pro') !== -1);
+          });
           if (upgBtn) {
             upgBtn.click();
           } else {
-            // Direct modal manipulation
-            var modal = document.getElementById('pricingModal');
-            if (modal) {
-              modal.removeAttribute('hidden');
-              modal.style.cssText = 'display:flex!important;visibility:visible!important;opacity:1!important;z-index:99999!important;position:fixed!important;inset:0!important;';
-              document.body.style.overflow = 'hidden';
-            }
+            // Scroll to life numbers section and open it
+            var lifeLink = Array.from(document.querySelectorAll('a, button')).find(function(b) {
+              return b.textContent && b.textContent.indexOf('Life Number') !== -1;
+            });
+            if (lifeLink) lifeLink.click();
+            // Wait then try to find upgrade button
+            setTimeout(function() {
+              var b2 = Array.from(document.querySelectorAll('button')).find(function(b) {
+                return b.textContent && (b.textContent.indexOf('Upgrade') !== -1 || b.textContent.indexOf('Pro') !== -1);
+              });
+              if (b2) b2.click();
+            }, 500);
           }
         });
       }
 
-      // Fix 3: Privacy Policy -> open privacy modal
+      // Fix 3: Privacy Policy -> open privacy modal (already working)
       if (txt === 'privacy policy') {
         el.addEventListener('click', function(e) {
           e.preventDefault();
