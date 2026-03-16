@@ -5,7 +5,6 @@ export default async function(request, context) {
 
   let html = await response.text();
 
-  // === CSS FIXES ===
   const cssfix = `<style>
     html,body{overflow:auto!important;overscroll-behavior-y:auto!important;}
     body.modal-open{overflow:auto!important;}
@@ -13,7 +12,6 @@ export default async function(request, context) {
     nav,header,[class*="navbar"],[id*="navbar"]{display:block!important;visibility:visible!important;opacity:1!important;position:sticky!important;top:0!important;z-index:9999!important;}
   </style>`;
 
-  // === JS FIXES ===
   const jsfix = `<script>
   document.addEventListener('DOMContentLoaded', function() {
 
@@ -21,9 +19,11 @@ export default async function(request, context) {
     setInterval(function() {
       var m = document.getElementById('disclaimerModal');
       var am = document.getElementById('authModal');
-      var open = (m && m.style.display !== 'none' && m.style.display !== '') ||
-                 (am && am.style.display !== 'none' && am.style.display !== '');
-      if (!open) {
+      var pm = document.getElementById('pricingModal');
+      var anyOpen = (m && m.offsetParent !== null) ||
+                    (am && am.offsetParent !== null) ||
+                    (pm && pm.offsetParent !== null);
+      if (!anyOpen) {
         document.body.style.overflow = '';
         document.documentElement.style.overflow = '';
       }
@@ -38,31 +38,29 @@ export default async function(request, context) {
       }).observe(i, {attributes: true, childList: true});
     }
 
-    // Fix 2 & 3: Footer links - match by text content since hrefs are "#"
+    // Fix 2, 3, 4: Footer links - match by text content since hrefs are "#"
     document.querySelectorAll('a').forEach(function(el) {
       var txt = el.textContent.trim().toLowerCase();
 
-      // Fix 2: Pricing -> open pricing modal
+      // Fix 2: Pricing -> find and click the existing Upgrade to Pro button
       if (txt === 'pricing') {
         el.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
-          // Try to find and open pricing/payment modal
-          var modal = document.getElementById('pricingModal') ||
-                      document.getElementById('paymentModal') ||
-                      document.querySelector('[id*="pricing"]') ||
-                      document.querySelector('[id*="payment"]') ||
-                      document.querySelector('[class*="pricing-modal"]');
-          if (modal) {
-            modal.style.display = 'flex';
-            modal.style.visibility = 'visible';
-            modal.style.opacity = '1';
+          // Navigate to Life Numbers tab first, then trigger pricing
+          var lifeTab = document.querySelector('[data-section="life"], a[href*="life"]');
+          // Try clicking an existing upgrade/pricing trigger button
+          var upgBtn = document.querySelector('button[onclick*="pricing"], button[onclick*="modal"], [data-action="upgrade"]');
+          if (upgBtn) {
+            upgBtn.click();
           } else {
-            // Fallback: navigate to Life Numbers tab which has pricing
-            var lifeBtn = document.querySelector('[data-tab="life"], [href*="life"], button[id*="life"]');
-            if (lifeBtn) lifeBtn.click();
-            var priceSec = document.querySelector('[id*="price"],[id*="plan"],[class*="price"],[class*="plan"]');
-            if (priceSec) priceSec.scrollIntoView({behavior:'smooth'});
+            // Direct modal manipulation
+            var modal = document.getElementById('pricingModal');
+            if (modal) {
+              modal.removeAttribute('hidden');
+              modal.style.cssText = 'display:flex!important;visibility:visible!important;opacity:1!important;z-index:99999!important;position:fixed!important;inset:0!important;';
+              document.body.style.overflow = 'hidden';
+            }
           }
         });
       }
@@ -72,29 +70,24 @@ export default async function(request, context) {
         el.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
-          var modal = document.getElementById('privacyModal') ||
-                      document.querySelector('[id*="privacy"]');
+          var modal = document.getElementById('privacyModal') || document.querySelector('[id*="privacy"]');
           if (modal) {
-            modal.style.display = 'flex';
-            modal.style.visibility = 'visible';
-            modal.style.opacity = '1';
+            modal.removeAttribute('hidden');
+            modal.style.cssText = 'display:flex!important;visibility:visible!important;opacity:1!important;z-index:99999!important;position:fixed!important;inset:0!important;';
           }
         });
       }
 
-      // Fix 4: Contact Us -> correct email, not shown on page
+      // Fix 4: Contact Us -> correct email, hidden from page
       if (txt === 'contact us' || (el.href && el.href.indexOf('hello@numerologygowhere') !== -1)) {
         el.href = 'mailto:numerologygowhere@gmail.com';
-        // Hide email from display
         if (el.innerText && el.innerText.indexOf('@') !== -1) el.innerText = 'Contact Us';
       }
     });
 
-    // Fix 4b: Hide any visible email addresses in footer
+    // Fix 4b: Hide any raw email text from mailto links
     document.querySelectorAll('a[href^="mailto:"]').forEach(function(el) {
-      if (el.innerText && el.innerText.indexOf('@') !== -1) {
-        el.innerText = 'Contact Us';
-      }
+      if (el.innerText && el.innerText.indexOf('@') !== -1) el.innerText = 'Contact Us';
     });
 
     // Fix 6: Navbar always visible
