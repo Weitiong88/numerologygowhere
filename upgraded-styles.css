@@ -85,6 +85,10 @@ footer p { font-size:0.875rem; margin-top:1.5rem; opacity:0.7; }
   .btn-primary { width:100%; }
 }
 @media (min-width:1024px) {
+    /* Fallback layout without grid - stack elements vertically */
+  .main-nav { display:block; width:100%; }
+  .side-nav { display:block; width:240px; float:left; height:auto; }
+  main { display:block; margin-left:240px; }
   /* TEMPORARILY DISABLED - CAUSING BLANK PAGE */ /* body { display:grid; grid-template-columns:240px 1fr; grid-template-rows:auto 1fr; } */  .main-nav { grid-column:1/-1; grid-row:1; }
   /* .main-nav { grid-column:1/-1; grid-row:1; } */
   /* .side-nav { grid-column:1; grid-row:2; height:calc(100vh - 110px); overflow-y:auto; position:sticky; top:110px; } */
