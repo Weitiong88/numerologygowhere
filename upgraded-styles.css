@@ -26,6 +26,7 @@ h3 { font-size:clamp(1.25rem,2.5vw,1.875rem); }
 
 .modal { position:fixed; inset:0; z-index:9999; display:flex; align-items:flex-end; justify-content:center; background:rgba(13,17,23,0.7); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
 .modal[style*="display:none"] { display:none !important; }
+.modal[style*="display: none"] { display:none !important; }
 .modal-content { position:relative; background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); width:100%; max-width:640px; max-height:90vh; border-radius:20px 20px 0 0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:2rem; box-shadow:0 20px 50px rgba(0,0,0,0.15); animation:slideUp 400ms ease-out; padding-bottom:calc(2rem + env(safe-area-inset-bottom)); border:1px solid rgba(212,168,83,0.3); }
 @keyframes slideUp { from { transform:translateY(100%); opacity:0; } to { transform:translateY(0); opacity:1; } }
 .modal-close { position:absolute; top:1rem; right:1rem; width:36px; height:36px; border:none; background:var(--cream-dark); border-radius:50%; cursor:pointer; font-size:1.25rem; display:flex; align-items:center; justify-content:center; transition:all var(--transition); color:var(--slate); }
