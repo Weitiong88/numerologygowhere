@@ -14,6 +14,7 @@
 <!-- DISCLAIMER MODAL -->
 <div id="disclaimerModal" class="modal"><div class="modal-content">
 <div class="modal-content">
+  <button class="modal-close" id="closeDisclaimer">✕</button>
 <h2>🔢 A Note Before You Begin</h2>
 <h3>Numerology GoWhere · Personal Life Path Reference Tool</h3>
 <p><strong>✨ What Numerology GoWhere Is For</strong></p>
@@ -119,6 +120,15 @@
 const SUPABASE_URL = 'YOUR_SUPABASE_URL';
 const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // DISCLAIMER MODAL
+document.getElementById('beginJourney').addEventListener('click', () => {
+  document.getElementById('disclaimerModal').style.display = 'none';
+});
+
+document.getElementById('closeDisclaimer').addEventListener('click', () => {
+  document.getElementById('disclaimerModal').style.display = 'none';
+});
 
 // STRIPE INIT
 const stripe = Stripe('YOUR_STRIPE_PUBLIC_KEY');
