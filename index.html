@@ -6363,6 +6363,101 @@ Resources:`; for (let t of c) { if (!t || typeof t != `string`) throw Error(`@su
     }
 
 </style>
+<style>
+
+    /* ── PREMIUM WAITLIST COMPONENT ── */
+    .waitlist-container {
+      max-width: 500px;
+      margin: 80px auto;
+      text-align: center;
+      padding: 40px 30px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    }
+    .waitlist-icon {
+      font-size: 56px;
+      margin-bottom: 20px;
+      animation: float 4s ease-in-out infinite;
+    }
+    .waitlist-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .waitlist-desc {
+      font-size: 15px;
+      color: var(--ink-mid);
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    .waitlist-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      border: 1px solid var(--border);
+    }
+    .waitlist-form-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .waitlist-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      background: rgba(255,255,255,0.9);
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+    .waitlist-input:focus {
+      outline: none;
+      border-color: var(--sage);
+      box-shadow: 0 0 0 4px rgba(138, 154, 146, 0.15);
+    }
+    .waitlist-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      background: var(--ink);
+      color: white;
+      font-weight: 600;
+      font-size: 15px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .waitlist-btn:hover {
+      background: var(--sage-deep);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(138, 154, 146, 0.2);
+    }
+    .waitlist-footnote {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-top: 16px;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
+    }
+
+</style>
 </head>
 
 <body>
@@ -13796,135 +13891,39 @@ WITH CHECK (
     </div>
   </div>
 
+  
   <div id="section-buddy" class="section-page">
-    <div class="buddy-wrap">
-      <div class="buddy-orb" id="buddyOrbIcon">💫</div>
-      <div class="buddy-name-en" id="buddyDisplayName">Hui — 慧</div>
-      <div class="buddy-name-zh" id="buddyTagline">Your Personal Numerology Guide · 你的数字智慧伴侣</div>
-
-      <!-- Name Selector -->
-      <div class="buddy-name-selector">
-        <div class="bns-label" data-en="Choose your AI guide&#39;s name" data-zh="选择你的AI引导者名字">Choose your AI guide's
-          name</div>
-        <div class="bns-grid" id="buddyNameGrid">
-          <div class="bns-card" data-name="Ming" data-char="明" data-orb="☀️"
-            data-meaning="Clarity &amp; light. The bright mind that sees through confusion."
-            data-meaning-zh="明澈·光亮。洞悉混沌的明亮心灵。" onclick="selectBuddyName(this)">
-            <div class="bns-char">明</div>
-            <div class="bns-pin">Ming</div>
-            <div class="bns-eng">Clarity</div>
-          </div>
-          <div class="bns-card" data-name="Yuan" data-char="源" data-orb="🌊"
-            data-meaning="Origin &amp; source. Wisdom that flows from the deepest spring."
-            data-meaning-zh="源头·本源。从最深泉眼涌出的智慧。" onclick="selectBuddyName(this)">
-            <div class="bns-char">源</div>
-            <div class="bns-pin">Yuan</div>
-            <div class="bns-eng">Origin</div>
-          </div>
-          <div class="bns-card" data-name="Shen" data-char="深" data-orb="🌌"
-            data-meaning="Depth &amp; mystery. Insight that reaches where others cannot see."
-            data-meaning-zh="深邃·神秘。洞见他人无法触及之处。" onclick="selectBuddyName(this)">
-            <div class="bns-char">深</div>
-            <div class="bns-pin">Shen</div>
-            <div class="bns-eng">Depth</div>
-          </div>
-          <div class="bns-card" data-name="Dao" data-char="道" data-orb="☯️"
-            data-meaning="The Way. Ancient guidance that aligns you with your true path."
-            data-meaning-zh="道·本路。与你真实道路相对齐的古老引导。" onclick="selectBuddyName(this)">
-            <div class="bns-char">道</div>
-            <div class="bns-pin">Dao</div>
-            <div class="bns-eng">The Way</div>
-          </div>
-          <div class="bns-card active" data-name="Hui" data-char="慧" data-orb="💫"
-            data-meaning="Wisdom &amp; discernment. The light that illuminates hidden meaning."
-            data-meaning-zh="慧·辨识。照亮隐藏意义的光芒。" onclick="selectBuddyName(this)">
-            <div class="bns-char">慧</div>
-            <div class="bns-pin">Hui</div>
-            <div class="bns-eng">Wisdom</div>
-          </div>
-          <div class="bns-card" data-name="Xing" data-char="星" data-orb="⭐"
-            data-meaning="Star &amp; destiny. A constant light to navigate by, even in darkness."
-            data-meaning-zh="星·命运。即使在黑暗中也能导航的恒常之光。" onclick="selectBuddyName(this)">
-            <div class="bns-char">星</div>
-            <div class="bns-pin">Xing</div>
-            <div class="bns-eng">Star</div>
-          </div>
-          <div class="bns-card" data-name="Ling" data-char="灵" data-orb="🌙"
-            data-meaning="Spirit &amp; soul. The unseen intelligence that speaks through numbers."
-            data-meaning-zh="灵·心魂。透过数字说话的无形智能。" onclick="selectBuddyName(this)">
-            <div class="bns-char">灵</div>
-            <div class="bns-pin">Ling</div>
-            <div class="bns-eng">Spirit</div>
-          </div>
-          <div class="bns-card" data-name="Lu" data-char="路" data-orb="🧭"
-            data-meaning="Path &amp; journey. Your guide through every crossroads of life."
-            data-meaning-zh="路·旅程。在生命每个十字路口引导你的向导。" onclick="selectBuddyName(this)">
-            <div class="bns-char">路</div>
-            <div class="bns-pin">Lu</div>
-            <div class="bns-eng">Path</div>
-          </div>
-        </div>
-        <div class="bns-meaning" id="bnsSelectedMeaning">Wisdom &amp; discernment. The light that illuminates hidden
-          meaning.</div>
+    <div class="waitlist-container">
+      <div class="waitlist-icon">🌟</div>
+      <div class="waitlist-title" data-en="Zhi AI Integration" data-zh="Zhi AI 智能解析">Zhi AI Integration</div>
+      <div class="waitlist-desc" data-en="Your personal numerology guide powered by advanced artificial intelligence is currently in development. Experience precise destiny reading like never before." data-zh="由先进人工智能驱动的个人数字命理向导目前正在开发中。体验前所未有的精准命运解读。">Your personal numerology guide powered by advanced artificial intelligence is currently in development. Experience precise destiny reading like never before.</div>
+      
+      <div class="waitlist-form">
+        <div class="waitlist-form-title" data-en="Get Notified" data-zh="获取最新通知">Get Notified</div>
+        <input type="email" class="waitlist-input" id="waitlistEmailZhi" placeholder="your@email.com">
+        <button class="waitlist-btn" onclick="alert('Thank you! You have been added to the Zhi AI waitlist.')" data-en="Join the Priority Waitlist" data-zh="加入优先候补名单">Join the Priority Waitlist</button>
       </div>
-
-      <div class="buddy-feats">
-        <div class="buddy-feat">
-          <div class="bfi">📅</div>
-          <div class="bfl" data-en="Daily Guidance" data-zh="每日指引">Daily Guidance</div>
-          <div class="bfd" data-en="Today’s energy based on your personal numbers" data-zh="基于你个人数字的今日能量分析">Today’s
-            energy based on your personal numbers</div>
-        </div>
-        <div class="buddy-feat">
-          <div class="bfi">❓</div>
-          <div class="bfl" data-en="Ask Anything" data-zh="随时发问">Ask Anything</div>
-          <div class="bfd" data-en="Career, love, timing — through your chart" data-zh="事业、感情、时机——透过你的命盘解读">Career,
-            love, timing — through your chart</div>
-        </div>
-        <div class="buddy-feat">
-          <div class="bfi">🌙</div>
-          <div class="bfl" data-en="Monthly Outlook" data-zh="月度展望">Monthly Outlook</div>
-          <div class="bfd" data-en="Themes and opportunities ahead" data-zh="前方主题与机遇预览">Themes and opportunities ahead
-          </div>
-        </div>
-        <div class="buddy-feat">
-          <div class="bfi">🔔</div>
-          <div class="bfl" data-en="Gentle Nudges" data-zh="温馨提醒">Gentle Nudges</div>
-          <div class="bfd" data-en="Reminders when your chart says pause or act" data-zh="当你的命盘提示暂停或行动时通知你">Reminders
-            when your chart says pause or act</div>
-        </div>
-      </div>
-
-      <div class="buddy-wl">
-        <div style="font-weight:700;color:var(--ink);margin-bottom:3px" data-en="🔔 Join the Waitlist"
-          data-zh="🔔 加入候补名单">🔔 Join the Waitlist</div>
-        <div style="font-size:12px;color:var(--ink-mid);margin-bottom:11px"
-          data-en="First access for Pro &amp; Elite subscribers. Free." data-zh="Pro及Elite订阅者优先免费使用。">First access for
-          Pro &amp; Elite subscribers. Free.</div>
-        <input type="email" id="buddyEmail" placeholder="your@email.com">
-        <button class="btn btn-primary" style="width:100%" onclick="joinBuddyWaitlist()"
-          data-en="Notify Me When Launches" data-zh="上线时通知我">Notify Me When Launches</button>
-      </div>
-      <div style="font-size:11.5px;color:var(--ink-mid)" data-en="Unlimited for subscribers · 5 queries/day free"
-        data-zh="订阅用户无限使用 · 免费版每日5次">Unlimited for subscribers · 5 queries/day free</div>
+      <div class="waitlist-footnote" data-en="First access granted to Elite & Pro subscribers." data-zh="优先权将授予 Elite 和 Pro 订阅用户。">First access granted to Elite & Pro subscribers.</div>
     </div>
   </div>
+
+
 
   <div id="section-shop" class="section-page">
-    <div style="max-width:480px;margin:60px auto;text-align:center;padding:0 20px">
-      <div style="font-size:60px;margin-bottom:18px">🛍</div>
-      <div style="font-family:&#39;DM Serif Display&#39;,serif;font-size:26px;color:var(--ink);margin-bottom:9px">Shop
-        Coming Soon</div>
-      <div style="font-size:13.5px;color:var(--ink-mid);line-height:1.7;margin-bottom:24px">Personalised numerology gift
-        sets, printed Life Chart reports, and Five Elements crystal recommendations.</div>
-      <div style="background:#fff;border:2px dashed var(--border);border-radius:14px;padding:20px">
-        <div style="font-weight:700;margin-bottom:7px;color:var(--ink)">Get notified when we launch</div>
-        <input type="email" id="shopEmail" placeholder="your@email.com"
-          style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:9px;font-size:16px;font-family:inherit;margin-bottom:9px;box-sizing:border-box">
-        <button class="btn btn-primary" style="width:100%" onclick="joinShopWaitlist()">Notify Me</button>
+    <div class="waitlist-container">
+      <div class="waitlist-icon">🛍️</div>
+      <div class="waitlist-title" data-en="The Destiny Shop" data-zh="命运商城">The Destiny Shop</div>
+      <div class="waitlist-desc" data-en="Curated five-elements crystal bracelets, extremely detailed printed life reports, and personalized numerology gift sets are arriving soon." data-zh="精选五行水晶手链、极其详细的纸质生命报告和个性化数字命理礼盒即将推出。">Curated five-elements crystal bracelets, extremely detailed printed life reports, and personalized numerology gift sets are arriving soon.</div>
+      
+      <div class="waitlist-form">
+        <div class="waitlist-form-title" data-en="Exclusive Early Access" data-zh="独家抢先体验">Exclusive Early Access</div>
+        <input type="email" class="waitlist-input" id="waitlistEmailShop" placeholder="your@email.com">
+        <button class="waitlist-btn" onclick="alert('Thank you! You have been added to the Shop early access list.')" data-en="Subscribe for Release Drops" data-zh="订阅新品发布">Subscribe for Release Drops</button>
       </div>
+      <div class="waitlist-footnote" data-en="Waitlist members receive an exclusive 10% lifetime discount." data-zh="候补名单成员将获得独家 10% 终身折扣。">Waitlist members receive an exclusive 10% lifetime discount.</div>
     </div>
   </div>
+
 
   <!-- ══ FOOTER ══════════════════════════════════════════════ -->
   <footer
