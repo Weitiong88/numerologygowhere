@@ -1,0 +1,3 @@
+# Redirect everything to v2 Vercel deployment
+# The ! suffix forces this redirect even over existing files
+/*    https://numerologygowhere-v2.vercel.app/:splat    301!

@@ -1,6 +1,17 @@
 [build]
   edge_functions = "netlify/edge-functions"
 
+# ─────────────────────────────────────────────────────────────────
+# PERMANENT REDIRECT — send ALL traffic to the v2 Vercel deployment
+# numerologygowhere.com/* → numerologygowhere-v2.vercel.app/*
+# force = true ensures this fires even if a matching file exists
+# ─────────────────────────────────────────────────────────────────
+[[redirects]]
+  from   = "/*"
+  to     = "https://numerologygowhere-v2.vercel.app/:splat"
+  status = 301
+  force  = true
+
 [[edge_functions]]
   function = "scroll-fix"
   path = "/*"
