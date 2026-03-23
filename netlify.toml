@@ -1,5 +1,6 @@
-[build]
-  edge_functions = "netlify/edge-functions"
+# Edge functions disabled — all traffic redirected to v2
+# [build]
+#   edge_functions = "netlify/edge-functions"
 
 # ─────────────────────────────────────────────────────────────────
 # PERMANENT REDIRECT — send ALL traffic to the v2 Vercel deployment
@@ -11,7 +12,3 @@
   to     = "https://numerologygowhere-v2.vercel.app/:splat"
   status = 301
   force  = true
-
-[[edge_functions]]
-  function = "scroll-fix"
-  path = "/*"
